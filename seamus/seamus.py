@@ -29,11 +29,11 @@ class Seamus:
 
     def _create_report(self, actual_result, test_result):
         is_equal = self._comparator(actual_result, test_result)
-        self._publish(is_equal)
+        self.publish(is_equal)
 
     @staticmethod
     def _default_comparator(actual_result, test_result):
         return actual_result == test_result
 
-    def _publish(self, is_equal):
+    def publish(self, is_equal):
         pass

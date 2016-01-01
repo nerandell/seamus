@@ -1,4 +1,5 @@
 from unittest import TestCase
+from unittest.mock import MagicMock
 
 from seamus.decorator import seamus
 from seamus.exceptions import SeamusException
@@ -33,11 +34,18 @@ class TestSeamus(TestCase):
     def test_decorator_with_insufficient_args(self):
         self.assertRaises(SeamusException, self._ill_decorated_function, *self._get_args(), **self._get_kwargs())
 
+    def test_publish(self):
+        self._seamus.publish = MagicMock(return_value = 3)
+        self._seamus.use(self._original_func, *self._get_args(), **self._get_kwargs())
+        self._seamus.test(self._refactored_func, *self._get_args(), **self._get_kwargs())
+        self._seamus.run()
+        self._seamus.publish.assert_called_with(True)
+
     def _original_func(self, arg1, arg2, kwarg1=None, kwarg2=1):
         return arg1
 
     def _refactored_func(self, arg1, arg2, kwarg1=None, kwarg2=1):
-        return arg2
+        return arg1
 
     @seamus(refactored_func=_refactored_func)
     def _decorated_function(self, arg1, arg2, kwarg1=None, kwarg2=1):
