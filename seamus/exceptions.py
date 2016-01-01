@@ -1,0 +1,2 @@
+class SeamusException(Exception):
+    pass
