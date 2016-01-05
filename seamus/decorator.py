@@ -4,6 +4,7 @@ from seamus.exceptions import SeamusException
 from seamus.seamus import Seamus
 
 REFACTORED_FUNC = 'refactored_func'
+FACTORY = 'factory'
 
 
 def seamus(func=None, **dkwargs):
@@ -14,7 +15,11 @@ def seamus(func=None, **dkwargs):
     def wrapper(*args, **kwargs):
         refactored_function = dkwargs.get(REFACTORED_FUNC, None)
         if refactored_function:
-            runner = Seamus()
+            factory = dkwargs.get(FACTORY, None)
+            if factory:
+                runner = factory()
+            else:
+                runner = Seamus()
             runner.use(func, *args, **kwargs)
             runner.test(refactored_function, *args, **kwargs)
             return runner.run()

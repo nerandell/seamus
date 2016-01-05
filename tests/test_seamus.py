@@ -6,7 +6,14 @@ from seamus.exceptions import SeamusException
 from seamus.seamus import Seamus
 
 
+class ExtendedSeamus(Seamus):
+
+    def publish(self, is_equal):
+        print(is_equal)
+
+
 class TestSeamus(TestCase):
+
     def setUp(self):
         self._seamus = Seamus()
 
@@ -35,11 +42,22 @@ class TestSeamus(TestCase):
         self.assertRaises(SeamusException, self._ill_decorated_function, *self._get_args(), **self._get_kwargs())
 
     def test_publish(self):
-        self._seamus.publish = MagicMock(return_value = 3)
+        self._seamus.publish = MagicMock(return_value=3)
         self._seamus.use(self._original_func, *self._get_args(), **self._get_kwargs())
         self._seamus.test(self._refactored_func, *self._get_args(), **self._get_kwargs())
         self._seamus.run()
         self._seamus.publish.assert_called_with(True)
+
+    def test_publish_for_extended_class(self):
+        self._seamus = ExtendedSeamus()
+        self._seamus.publish = MagicMock(return_value='test')
+        self._seamus.use(self._original_func, *self._get_args(), **self._get_kwargs())
+        self._seamus.test(self._refactored_func, *self._get_args(), **self._get_kwargs())
+        self._seamus.run()
+        self._seamus.publish.assert_called_with(True)
+
+    def test_publish_for_decorator_with_factory(self):
+        self.assertEqual(self._decorated_function_with_factory(*self._get_args(), **self._get_kwargs()), 1)
 
     def _original_func(self, arg1, arg2, kwarg1=None, kwarg2=1):
         return arg1
@@ -53,6 +71,10 @@ class TestSeamus(TestCase):
 
     @seamus(abcd=_refactored_func)
     def _ill_decorated_function(self, arg1, arg2, kwarg1=None, kwarg2=1):
+        return arg1
+
+    @seamus(refactored_func=_refactored_func, factory=ExtendedSeamus)
+    def _decorated_function_with_factory(self, arg1, arg2, kwarg1=None, kwarg2=1):
         return arg1
 
     def _get_kwargs(self):
