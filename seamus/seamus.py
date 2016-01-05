@@ -6,9 +6,12 @@ class Seamus:
         self._refactored_func = None
         self._refactored_func_args = None
         self._refactored_func_kwargs = None
+
         if comparator is None:
             self._comparator = self._default_comparator
         else:
+            if not callable(comparator):
+                raise ValueError('comparator is not callable')
             self._comparator = comparator
 
     def use(self, original_func, *args, **kwargs):
