@@ -1,5 +1,6 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
+from random import random
 
 from seamus.decorator import seamus
 from seamus.exceptions import SeamusException
@@ -7,13 +8,11 @@ from seamus.seamus import Seamus
 
 
 class ExtendedSeamus(Seamus):
-
     def publish(self, is_equal):
         print(is_equal)
 
 
 class TestSeamus(TestCase):
-
     def setUp(self):
         self._seamus = Seamus()
 
@@ -56,6 +55,9 @@ class TestSeamus(TestCase):
         self._seamus.run()
         self._seamus.publish.assert_called_with(True)
 
+    def test_strategy(self):
+        self.assertEqual(self._decorated_function_with_strategy(*self._get_args(), **self._get_kwargs()), 1)
+
     def test_publish_for_decorator_with_factory(self):
         self.assertEqual(self._decorated_function_with_factory(*self._get_args(), **self._get_kwargs()), 1)
 
@@ -75,6 +77,10 @@ class TestSeamus(TestCase):
 
     @seamus(refactored_func=_refactored_func, factory=ExtendedSeamus)
     def _decorated_function_with_factory(self, arg1, arg2, kwarg1=None, kwarg2=1):
+        return arg1
+
+    @seamus(refactored_func=_refactored_func, run_strategy=lambda: random() > 0.5)
+    def _decorated_function_with_strategy(self, arg1, arg2, kwarg1=None, kwarg2=1):
         return arg1
 
     def _get_kwargs(self):

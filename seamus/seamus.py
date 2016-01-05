@@ -1,5 +1,5 @@
 class Seamus:
-    def __init__(self, comparator=None):
+    def __init__(self, comparator=None, run_strategy=None):
         self._original_func = None
         self._original_func_args = None
         self._original_func_kwargs = None
@@ -10,9 +10,14 @@ class Seamus:
         if comparator is None:
             self._comparator = self._default_comparator
         else:
-            if not callable(comparator):
-                raise ValueError('comparator is not callable')
             self._comparator = comparator
+
+        if run_strategy is None:
+            # Always run the test
+            self._strategy = lambda: True
+        else:
+            self._strategy = run_strategy
+        print(self._strategy)
 
     def use(self, original_func, *args, **kwargs):
         self._original_func = original_func
@@ -26,8 +31,9 @@ class Seamus:
 
     def run(self):
         actual_result = self._original_func(*self._original_func_args, **self._original_func_kwargs)
-        test_result = self._refactored_func(*self._refactored_func_args, **self._original_func_kwargs)
-        self._create_report(actual_result, test_result)
+        if self._strategy():
+            test_result = self._refactored_func(*self._refactored_func_args, **self._original_func_kwargs)
+            self._create_report(actual_result, test_result)
         return actual_result
 
     def _create_report(self, actual_result, test_result):
