@@ -6,9 +6,12 @@ seamus
     :target: https://pypi.python.org/pypi/seamus
 .. image:: https://coveralls.io/repos/nerandell/seamus/badge.svg?branch=master&service=github 
     :target: https://coveralls.io/github/nerandell/seamus?branch=master
+.. image:: https://readthedocs.org/projects/seamus/badge/?version=latest
+    :target: http://seamus.readthedocs.org/en/latest/?badge=latest
+    :alt: Documentation Status
 
 Python library that makes testing refactored code super simple. Inspired by scientist_ from github. The goal of `seamus` is to make testing of refactored code easy. Let's say that you decide to refactor a method in your code.
-But if your code is running in production environment, it is too risky to roll out the refactored code directly. `seamus` comes to rescue here. You can use it with plenty of options offered to stragically test your refactored code in background leaving your end users unaffected. Once you are sure that the refactored code is behaving as expected, then you can roll it out.
+But if your code is running in production environment, it is too risky to roll out the refactored code directly. `seamus` comes to rescue here. You can use it with plenty of options offered to strategically test your refactored code in background leaving your end users unaffected. Once you are sure that the refactored code is behaving as expected, then you can roll it out.
 
 .. _scientist: https://github.com/github/scientist
 
@@ -126,6 +129,12 @@ any callable which returns an extended ``Seamus`` class or atleast quack like ``
     
         def _refactored_func(self, num1, num2):
             return num1 + num2
+
+Documentation
+-------------
+Documentation is available here_
+
+.. _here : http://seamus.readthedocs.org
 
 License
 -------
