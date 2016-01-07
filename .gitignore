@@ -60,3 +60,5 @@ target/
 
 #mac
 *.DS_Store
+*~
+*.swp

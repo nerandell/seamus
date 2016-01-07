@@ -10,6 +10,10 @@ DECORATOR_ARGS = [REFACTORED_FUNC, FACTORY]
 
 
 def seamus(func=None, **dkwargs):
+    """
+    Run seamus test with the supplied arguments
+    :return: The result returned by original function
+    """
     if func is None:
         return partial(seamus, **dkwargs)
 
