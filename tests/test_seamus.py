@@ -61,6 +61,14 @@ class TestSeamus(TestCase):
     def test_publish_for_decorator_with_factory(self):
         self.assertEqual(self._decorated_function_with_factory(*self._get_args(), **self._get_kwargs()), 1)
 
+    def test_comparator(self):
+        self._seamus = Seamus(comparator=lambda x, y: x + 1 == y)
+        self._seamus.publish = MagicMock(return_value='test')
+        self._seamus.use(self._original_func, *self._get_args(), **self._get_kwargs())
+        self._seamus.test(self._refactored_func, *self._get_args(), **self._get_kwargs())
+        self._seamus.run()
+        self._seamus.publish.assert_called_with(False)
+
     def _original_func(self, arg1, arg2, kwarg1=None, kwarg2=1):
         return arg1
 

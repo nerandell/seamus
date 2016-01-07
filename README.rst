@@ -4,6 +4,8 @@ seamus
     :target: https://travis-ci.org/nerandell/seamus
 .. image:: https://badge.fury.io/py/seamus.svg
     :target: https://pypi.python.org/pypi/seamus
+.. image:: https://coveralls.io/repos/nerandell/seamus/badge.svg?branch=master&service=github 
+    :target: https://coveralls.io/github/nerandell/seamus?branch=master
 
 Python library that makes testing refactored code super simple. Inspired by scientist_ from github. The goal of `seamus` is to make testing of refactored code easy. Let's say that you decide to refactor a method in your code.
 But if your code is running in production environment, it is too risky to roll out the refactored code directly. `seamus` comes to rescue here. You can use it with plenty of options offered to stragically test your refactored code in background leaving your end users unaffected. Once you are sure that the refactored code is behaving as expected, then you can roll it out.
@@ -101,7 +103,7 @@ This makes the code concise. However currenly, ``seamus`` doesn't do a lot with 
             return num1 + num2
 
 You can also use the decorator with ``factory`` argument. ``factory`` can be just about
-any callable which returns an extended ``Seamus`` class or atleast duck-type ``Seamus`` class (at your own risk).
+any callable which returns an extended ``Seamus`` class or atleast quack like ``Seamus`` class (at your own risk).
 
 .. code-block:: python
 
