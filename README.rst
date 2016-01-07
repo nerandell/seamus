@@ -101,7 +101,7 @@ This makes the code concise. However currenly, ``seamus`` doesn't do a lot with 
             return num1 + num2
 
 You can also use the decorator with ``factory`` argument. ``factory`` can be just about
-any callable which returns an extended ``Seamus`` class or atleast duck-type ``Seamus`` class (at your own risk).
+any callable which returns an extended ``Seamus`` class or atleast quack like ``Seamus`` class (at your own risk).
 
 .. code-block:: python
 
