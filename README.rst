@@ -129,6 +129,48 @@ any callable which returns an extended ``Seamus`` class or atleast quack like ``
     
         def _refactored_func(self, num1, num2):
             return num1 + num2
+            
+By default, to compare the result returned by actual and the refactored function, ``seamus`` uses ``==`` operator. 
+However you can easily override it by passing comparator as an argument and it can return a ``true`` or a ``false`` value based on your own logic.
+
+.. code-block:: python
+
+    from seamus import Seamus
+    
+    class SeamusExample:
+    
+        def add_numbers(self, num1, num2):
+            result = self._original_func(num1, num2)
+            return result
+    
+        @seamus(refactored_func=_refactored_func, comparator=lambda x, y: x + 1 == y)
+        def _original_func(self, num1, num2):
+            return num1 + 2 * num2 - num2 
+    
+        def _refactored_func(self, num1, num2):
+            return num1 + num2
+            
+By default, both the functions are run everytime, but what if you have to run the refactored version only a few times?
+You can do that by providing a strategy.
+
+.. code-block:: python
+
+    from seamus import Seamus
+    
+    class SeamusExample:
+    
+        def add_numbers(self, num1, num2):
+            result = self._original_func(num1, num2)
+            return result
+    
+        @seamus(refactored_func=_refactored_func, run_strategy=lambda: random() > 0.5)
+        def _original_func(self, num1, num2):
+            return num1 + 2 * num2 - num2 
+    
+        def _refactored_func(self, num1, num2):
+            return num1 + num2
+
+In the above exmaple, the refactored version will only run 50% of the time.
 
 Documentation
 -------------
