@@ -186,3 +186,7 @@ Source code
 -----------
 The latest developer version is available in a github repository:
 https://github.com/nerandell/seamus
+
+Origin of Name
+-------
+The name is derived from Pink Floyd's song "Seamus" from the 1971 album Meddle. 
